@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя, любимая!</title>
+    <link rel="stylesheet" href="./gallery.css">
+</head>
+<body>
+    <!-- Заголовок -->
+    <h1>С 14 февраля, любимая!</h1>
+
+    <!-- Текст по бокам -->
+    <div class="side-text left-text">
+        Ты – самое дорогое, что у меня есть.<br>
+        Ты – моя радость, моя любовь.<br>
+        С тобой я счастлив.
+    </div>
+    <div class="side-text right-text">
+        Ты – моя муза и вдохновение.<br>
+        Ты делаешь каждый день особенным.<br>
+        Спасибо, что ты есть!
+    </div>
+    
+        <!-- Слайд-шоу -->
+        <div class="slideshow">
+            <img src="./images/1.jpg" class="active">
+            <img src="./images/2.jpg">
+            <img src="./images/3.jpg">
+            <img src="./images/4.jpg">
+            <img src="./images/5.jpg">
+            <img src="./images/6.jpg">
+            <img src="./images/7.jpg">
+            <img src="./images/8.jpg">
+            <img src="./images/9.jpg">
+            <img src="./images/10.jpg">
+            <img src="./images/11.jpg">
+            <img src="./images/12.jpg">
+            <img src="./images/13.jpg">
+            <img src="./images/14.jpg">
+            <img src="./images/15.jpg">
+            <img src="./images/16.jpg">
+            <img src="./images/17.jpg">
+            <img src="./images/18.jpg">
+            <img src="./images/19.jpg">
+            <img src="./images/20.jpg">
+            <img src="./images/21.jpg">
+        </div>
+
+    <!-- Фоновая музыка -->
+    <audio id="background-music" loop>
+        <source src="./love-song.mp3/Dj_ruslan_-_not_anymore_-_70022136.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <!-- Кнопка управления музыкой -->
+    <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
+
+    <script>
+        let images = document.querySelectorAll('.slideshow img');
+        let index = 0;
+        let audio = document.getElementById("background-music");
+        let musicBtn = document.querySelector(".music-btn");
+        let isPlaying = false;
+        let slideshowInterval;
+
+        function changeImage() {
+            images[index].classList.remove('active');
+            index = (index + 1) % images.length;
+            images[index].classList.add('active');
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.textContent = "▶ Включить музыку";
+                clearInterval(slideshowInterval); // Останавливаем переключение фото
+            } else {
+                audio.play();
+                musicBtn.textContent = "⏸ Остановить музыку";
+                slideshowInterval = setInterval(changeImage, 3000); // Запускаем смену фото только при музыке
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Запуск музыки только после первого взаимодействия с пользователем (для мобильных браузеров)
+        document.body.addEventListener('click', function startAudio() {
+            audio.play().then(() => {
+                document.body.removeEventListener('click', startAudio);
+            }).catch(err => console.log("Автовоспроизведение запрещено браузером"));
+        });
+    </script>
+</body>
+</html>
